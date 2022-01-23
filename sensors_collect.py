@@ -18,29 +18,27 @@ mpu = MPU9250(
 mpu.configure() # Apply the settings to the registers.
 
 # Create a metric to track time spent and requests made.
-REQUEST_MAGNETOMETER = Gauge('sensors_request_magnetometer', 'read magnetic field level from sensors', unit="uT")
-REQUEST_TEMPERATURE = Gauge('sensors_request_temperature', 'read temperature level from sensors', unit="C")
+request_magnetomer = Gauge('sensors_request_magnetometer', 'read magnetic field level from sensors', unit="uT")
+request_temperature = Gauge('sensors_request_temperature', 'read temperature level from sensors', unit="C")
 
 # Decorate function with metric.
 
-@REQUEST_MAGNETOMETER.time()
 def get_magnetometer(a):
     magnetometer=np.array(a)
     magnetometer=np.absolute(magnetometer)
     magnetometer=np.mean(magnetometer)
     time.sleep(0.5)
     print(magnetometer)
+    return magnetometer
 
-@REQUEST_TEMPERATURE.time()
 def get_temperature(b):
     temperature.set(b)
     print(temperature)
+    return temperature
 
-#@REQUEST_ACCELEROMETER.set_to_current_time()
 #def accelerometer():
 #    accelerometer=mpu.readAccelerometerMaster()
 
-#@REQUEST_GYROSCOPE.set_to_current_time()
 #def gyroscope():
 #    gyroscope=mpu.readGyroscopeMaster()
 
@@ -50,5 +48,5 @@ if __name__ == '__main__':
     start_http_server(8000)
     # Generate some requests.
     while True:
-        get_magnetometer(mpu.readMagnetometerMaster())
-        get_temperature(mpu.readTemperatureMaster())
+        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster())
+        request_temperature.set(get_temperature(mpu.readTemperatureMaster()))
