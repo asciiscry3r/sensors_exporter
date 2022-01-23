@@ -27,8 +27,6 @@ def get_magnetometer(a):
     magnetometer=np.array(a)
     magnetometer=np.absolute(magnetometer)
     magnetometer=np.mean(magnetometer)
-    time.sleep(0.5)
-    print(magnetometer)
     return magnetometer
 
 #def accelerometer():
