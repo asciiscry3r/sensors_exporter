@@ -20,7 +20,6 @@ DeviceAllow=
 LockPersonality=true
 MemoryDenyWriteExecute=false
 NoNewPrivileges=true
-PrivateDevices=true
 PrivateTmp=true
 ProtectClock=true
 ProtectControlGroups=true

@@ -17,5 +17,5 @@ ___
 ```
 sudo -H pip install -r requirements.txt
 sudo cp sensors_collect.py /usr/local/bin/sensors_exporter.py
-sudo cp sensors-exporter.sevice /lib/systemd/system/sensors-exporter.service
+sudo cp sensors-exporter.service /lib/systemd/system/sensors-exporter.service
 ```
