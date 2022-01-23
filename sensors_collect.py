@@ -31,11 +31,6 @@ def get_magnetometer(a):
     print(magnetometer)
     return magnetometer
 
-def get_temperature(b):
-    temperature.set(b)
-    print(temperature)
-    return temperature
-
 #def accelerometer():
 #    accelerometer=mpu.readAccelerometerMaster()
 
@@ -48,5 +43,5 @@ if __name__ == '__main__':
     start_http_server(8000)
     # Generate some requests.
     while True:
-        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster())
-        request_temperature.set(get_temperature(mpu.readTemperatureMaster()))
+        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster()))
+        request_temperature.set(mpu.readTemperatureMaster())
