@@ -1,0 +1,45 @@
+[Unit]
+Description=Sensors exporter
+Wants=network-online.target
+After=network-online.target
+After=prometheus-server.service
+
+[Service]
+User=pi
+Group=pi
+Type=simple
+Restart=on-failure
+WorkingDirectory=/usr/share/grafana
+RuntimeDirectory=grafana
+RuntimeDirectoryMode=0750
+ExecStart=/usr/bin/python /usr/local/bin/sensors_exporter.py
+
+LimitNOFILE=10000
+TimeoutStartSec=60
+TimeoutStopSec=20
+CapabilityBoundingSet=
+DeviceAllow=
+LockPersonality=true
+MemoryDenyWriteExecute=false
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=full
+RemoveIPC=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
