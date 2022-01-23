@@ -9,9 +9,7 @@ User=pi
 Group=pi
 Type=simple
 Restart=on-failure
-WorkingDirectory=/usr/share/grafana
-RuntimeDirectory=grafana
-RuntimeDirectoryMode=0750
+
 ExecStart=/usr/bin/python /usr/local/bin/sensors_exporter.py
 
 LimitNOFILE=10000
