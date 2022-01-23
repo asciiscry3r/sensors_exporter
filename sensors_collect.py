@@ -23,15 +23,16 @@ REQUEST_TEMPERATURE = Gauge('sensors_request_temperature', 'read temperature lev
 
 # Decorate function with metric.
 
-@REQUEST_MAGNETOMETER.set_to_current_time()
-def magnetometer(a):
+@REQUEST_MAGNETOMETER.time()
+def get_magnetometer(a):
     magnetometer=np.array(a)
     magnetometer=np.absolute(magnetometer)
     magnetometer=np.mean(magnetometer)
+    time.sleep(0.5)
+    print(magnetometer)
 
-@REQUEST_TEMPERATURE.set_to_current_time()
-def temperature(b):
-    temperature = Gauge('sensors_request_temperature', 'read temperature level from sensors')
+@REQUEST_TEMPERATURE.time()
+def get_temperature(b):
     temperature.set(b)
     print(temperature)
 
@@ -49,5 +50,5 @@ if __name__ == '__main__':
     start_http_server(8000)
     # Generate some requests.
     while True:
-        magnetometer(mpu.readMagnetometerMaster())
-        temperature(mpu.readTemperatureMaster())
+        get_magnetometer(mpu.readMagnetometerMaster())
+        get_temperature(mpu.readTemperatureMaster())
