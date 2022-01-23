@@ -1,0 +1,4 @@
+prometheus-client
+smbus2
+mpu9250-jmdev
+numpy
