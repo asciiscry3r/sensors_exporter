@@ -4,6 +4,8 @@ import time
 import numpy as np
 from mpu9250_jmdev.registers import *
 from mpu9250_jmdev.mpu_9250 import MPU9250
+import RPi.GPIO as GPIO
+
 
 mpu = MPU9250(
     address_ak=AK8963_ADDRESS, 
@@ -16,6 +18,14 @@ mpu = MPU9250(
     mode=AK8963_MODE_C100HZ)
 
 mpu.configure() # Apply the settings to the registers.
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+print(GPIO.RPI_INFO)
+GPIO.setup([29, 31], GPIO.OUT, initial=GPIO.LOW)
+GPIO.output(29, GPIO.LOW)
+GPIO.output(31, GPIO.LOW)
+
 
 # Create a metric to track time spent and requests made.
 request_magnetomer = Gauge('sensors_request_magnetometer', 'read magnetic field level from sensors', unit="uT")
@@ -35,11 +45,24 @@ def get_magnetometer(a):
 #def gyroscope():
 #    gyroscope=mpu.readGyroscopeMaster()
 
+def check_alert():
+    current_field = get_magnetometer(mpu.readMagnetometerMaster())
+    alert_level = 60
+    period =  120
+    if current_field >= alert_level:
+        GPIO.output(29, GPIO.LOW)
+        GPIO.output(31, GPIO.HIGH)
+        GPIO.output(31, GPIO.LOW)
+        GPIO.output(29, GPIO.HIGH)
+    else:
+        GPIO.output(29, GPIO.HIGH)
 
 if __name__ == '__main__':
     # Start up the server to expose the metrics.
-    start_http_server(8000)
-    # Generate some requests.
+    start_http_server(8000    # Generate some requests.
     while True:
-        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster()))
+
+        check_alert()
+        
+        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster())
         request_temperature.set(mpu.readTemperatureMaster())
