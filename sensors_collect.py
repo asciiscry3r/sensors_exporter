@@ -46,7 +46,7 @@ def get_magnetometer(a):
 
 if __name__ == '__main__':
     # Start up the server to expose the metrics.
-    start_http_server(8000    # Generate some requests.
+    start_http_server(8000)    # Generate some requests.
     while True:
 
         current_field = get_magnetometer(mpu.readMagnetometerMaster())
@@ -56,5 +56,5 @@ if __name__ == '__main__':
             GPIO.output(29, GPIO.HIGH)
             GPIO.output(29, GPIO.LOW)
 
-        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster())
+        request_magnetomer.set(get_magnetometer(mpu.readMagnetometerMaster()))
         request_temperature.set(mpu.readTemperatureMaster())
