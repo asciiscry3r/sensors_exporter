@@ -17,6 +17,7 @@ TimeoutStartSec=60
 TimeoutStopSec=20
 CapabilityBoundingSet=
 DeviceAllow=/dev/i2c-1
+DeviceAllow=/dev/mem
 LockPersonality=true
 MemoryDenyWriteExecute=false
 NoNewPrivileges=true
