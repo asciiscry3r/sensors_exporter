@@ -5,8 +5,8 @@ After=network-online.target
 After=prometheus-server.service
 
 [Service]
-User=pi
-Group=pi
+User=root
+Group=root
 Type=simple
 Restart=on-failure
 
@@ -15,21 +15,6 @@ ExecStart=/usr/bin/python /usr/local/bin/sensors_exporter.py
 LimitNOFILE=10000
 TimeoutStartSec=60
 TimeoutStopSec=20
-CapabilityBoundingSet=
-DeviceAllow=/dev/i2c-1
-DeviceAllow=/dev/mem
-LockPersonality=true
-MemoryDenyWriteExecute=false
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectClock=true
-ProtectControlGroups=true
-ProtectHome=true
-ProtectHostname=true
-ProtectKernelLogs=true
-ProtectKernelModules=true
-ProtectKernelTunables=true
-ProtectProc=invisible
 ProtectSystem=full
 RemoveIPC=true
 RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
